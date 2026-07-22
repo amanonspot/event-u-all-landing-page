@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+:root {
+  /* ── Light content body (default surface) ───────────────── */
+  --bg: #ffffff;
+  --surface: #f7f8fa;
+  --surface-2: #eef1f5;
+  --fg: #0b1220;
+  --muted: #5b6473;
+  --muted-dim: #97a0b0;
+  --border: rgba(11, 18, 32, 0.10);
+  --border-soft: rgba(11, 18, 32, 0.06);
+
+  /* ── Dark cinematic surfaces (hero, category tiles, CTA band) */
+  --hero-bg: #080c16;
+  --hero-surface: #111726;
+  --hero-fg: #ffffff;
+  --hero-muted: #9aa6bd;
+  --hero-border: rgba(255, 255, 255, 0.10);
+
+  /* ── Brand accents (placeholder gold → warm coral) ──────── */
+  --accent: #c8963a;
+  --accent-2: #e0653c;
+  --accent-soft: rgba(200, 150, 58, 0.12);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-muted-dim: var(--muted-dim);
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+
+  --color-hero-bg: var(--hero-bg);
+  --color-hero-surface: var(--hero-surface);
+  --color-hero-fg: var(--hero-fg);
+  --color-hero-muted: var(--hero-muted);
+  --color-hero-border: var(--hero-border);
+
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-soft: var(--accent-soft);
+
+  --font-display: var(--font-bricolage);
+  --font-body: var(--font-instrument);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-instrument), sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-bricolage), sans-serif;
+}
+
+.text-gradient {
+  background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ── Infinite logo marquee ──────────────────────────────── */
+@keyframes euall-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.euall-marquee-track {
+  animation: euall-marquee 34s linear infinite;
+}
+.euall-marquee:hover .euall-marquee-track {
+  animation-play-state: paused;
+}
+
+/* ── Gentle pulse (badges, dots) ────────────────────────── */
+@keyframes euall-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1); }
+}
+.euall-pulse { animation: euall-pulse 2.4s ease-in-out infinite; }
+
+/* ── Slow float (hero stat cards) ───────────────────────── */
+@keyframes euall-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.euall-float {
+  animation: euall-float var(--float-dur, 7s) ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+/* Hide scrollbars on horizontal carousels while keeping scroll */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .euall-marquee-track { animation: none; justify-content: center; flex-wrap: wrap; }
+  .euall-pulse, .euall-float { animation: none; }
+  html { scroll-behavior: auto; }
+}
