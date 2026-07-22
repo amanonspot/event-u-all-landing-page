@@ -14,6 +14,10 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+> **Local dev port: 3000** (pinned in `package.json`). Each project on this machine
+> uses its own fixed port so several can run at once without colliding — e.g. the
+> pitch deck runs on `3210`. Give any new project a unique port in its `dev` script.
+
 ## Environment
 
 | Variable | Purpose |
