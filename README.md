@@ -12,11 +12,12 @@ cp .env.example .env.local   # fill in your Formspree endpoint + WhatsApp number
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3002](http://localhost:3002).
 
-> **Local dev port: 3000** (pinned in `package.json`). Each project on this machine
-> uses its own fixed port so several can run at once without colliding — e.g. the
-> pitch deck runs on `3210`. Give any new project a unique port in its `dev` script.
+> **Local dev port: 3002** (pinned in `package.json`). Each project on this machine
+> uses its own fixed port so several can run at once without colliding. Ports in
+> use locally: `3000` Spoto Ranger (frontend), `3001` Spoto Ranger (admin),
+> `3210` pitch deck. Give any new project its own unused port in its `dev` script.
 
 ## Environment
 
