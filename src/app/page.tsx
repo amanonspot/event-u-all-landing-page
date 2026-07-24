@@ -9,7 +9,6 @@ import FeaturedWork from "@/components/home/FeaturedWork";
 import CaseStudiesTeaser from "@/components/home/CaseStudiesTeaser";
 import WhyUs from "@/components/home/WhyUs";
 import Testimonials from "@/components/home/Testimonials";
-import Industries from "@/components/home/Industries";
 import Process from "@/components/home/Process";
 import FAQ from "@/components/home/FAQ";
 import ProposalCTA from "@/components/home/ProposalCTA";
@@ -28,7 +27,6 @@ export default function Home() {
       <CaseStudiesTeaser />
       <WhyUs />
       <Testimonials />
-      <Industries />
       <Process />
       <FAQ />
       <ProposalCTA />

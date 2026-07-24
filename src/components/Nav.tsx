@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NAV_LINKS, SITE } from "@/lib/site";
+import { INDUSTRY_DETAILS } from "@/lib/industries";
 
 export default function Nav() {
   const pathname = usePathname();
@@ -71,16 +72,40 @@ export default function Nav() {
 
         <ul className="hidden lg:flex gap-4 xl:gap-6 items-center ml-auto">
           {NAV_LINKS.map((l) => {
-            const active = pathname === l.href;
+            const active =
+              pathname === l.href || (l.dropdown && pathname.startsWith(l.href));
+            const linkClass = `text-sm font-medium whitespace-nowrap transition-colors ${
+              active && solid ? "text-fg" : linkColor
+            }`;
+
+            if (l.dropdown) {
+              return (
+                <li key={l.href} className="relative group">
+                  <Link href={l.href} className={`inline-flex items-center gap-1 ${linkClass}`}>
+                    {l.label}
+                    <span aria-hidden className="text-[10px] mt-0.5 transition-transform group-hover:rotate-180">▾</span>
+                  </Link>
+                  {/* pt-3 keeps the hover bridge between label and panel */}
+                  <div className="absolute right-0 top-full pt-3 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 transition-all">
+                    <div className="w-[380px] bg-bg border border-border rounded-xl shadow-[0_20px_50px_rgba(11,18,32,0.18)] p-2 grid grid-cols-2 gap-0.5">
+                      {INDUSTRY_DETAILS.map((ind) => (
+                        <Link
+                          key={ind.slug}
+                          href={`/industries/${ind.slug}`}
+                          className="px-3 py-2 rounded-lg text-sm font-medium text-muted hover:bg-surface hover:text-accent transition-colors"
+                        >
+                          {ind.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </li>
+              );
+            }
+
             return (
               <li key={l.href}>
-                <Link
-                  href={l.href}
-                  onClick={handleNav(l.href)}
-                  className={`text-sm font-medium whitespace-nowrap transition-colors ${
-                    active && solid ? "text-fg" : linkColor
-                  }`}
-                >
+                <Link href={l.href} onClick={handleNav(l.href)} className={linkClass}>
                   {l.label}
                 </Link>
               </li>

@@ -17,12 +17,14 @@ export const SITE = {
   },
 };
 
-export const NAV_LINKS = [
+export type NavLink = { href: string; label: string; dropdown?: boolean };
+
+export const NAV_LINKS: NavLink[] = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/destinations", label: "Destinations" },
   { href: "/#activities", label: "Activities" },
-  { href: "/#industries", label: "Industries" },
+  { href: "/industries", label: "Industries", dropdown: true },
   { href: "/case-studies", label: "Case Studies" },
   { href: "/contact", label: "Contact" },
 ];
