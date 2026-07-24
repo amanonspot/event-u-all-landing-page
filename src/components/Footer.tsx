@@ -12,6 +12,7 @@ const COMPANY = [
   { href: "/about", label: "About" },
   { href: "/case-studies", label: "Case Studies" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/#artists", label: "Artists" },
   { href: "/contact", label: "Contact" },
 ];
 

@@ -22,9 +22,7 @@ export const NAV_LINKS = [
   { href: "/services", label: "Services" },
   { href: "/destinations", label: "Destinations" },
   { href: "/#activities", label: "Activities" },
-  { href: "/#artists", label: "Artists" },
   { href: "/#industries", label: "Industries" },
-  { href: "/gallery", label: "Gallery" },
   { href: "/case-studies", label: "Case Studies" },
   { href: "/contact", label: "Contact" },
 ];
