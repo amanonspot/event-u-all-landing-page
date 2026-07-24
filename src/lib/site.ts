@@ -111,8 +111,8 @@ export const TESTIMONIALS = [
 ];
 
 export const INDUSTRIES = [
-  "IT & Technology", "Healthcare", "Manufacturing", "Real Estate", "Finance",
-  "Education", "Retail", "Automobile", "Government", "Hospitality", "Startups",
+  "IT/Tech", "BFSI", "FMCG", "Pharma/Healthcare", "Real Estate", "Manufacturing",
+  "E-commerce", "Retail", "Automotive", "Education", "Hospitality",
 ];
 
 export const SERVICE_GROUPS = [

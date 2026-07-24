@@ -6,6 +6,7 @@ import Activities from "@/components/home/Activities";
 import Artists from "@/components/home/Artists";
 import GalleryPreview from "@/components/home/GalleryPreview";
 import FeaturedWork from "@/components/home/FeaturedWork";
+import CaseStudiesTeaser from "@/components/home/CaseStudiesTeaser";
 import WhyUs from "@/components/home/WhyUs";
 import Testimonials from "@/components/home/Testimonials";
 import Industries from "@/components/home/Industries";
@@ -24,6 +25,7 @@ export default function Home() {
       <Artists />
       <GalleryPreview />
       <FeaturedWork />
+      <CaseStudiesTeaser />
       <WhyUs />
       <Testimonials />
       <Industries />

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import FadeIn from "@/components/FadeIn";
 import PageHeader from "@/components/PageHeader";
+import { SectionHeader } from "@/components/Section";
 import { SERVICE_GROUPS } from "@/lib/site";
+import { ANCILLARY_SERVICES } from "@/lib/services";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -57,6 +59,32 @@ export default function ServicesPage() {
               </div>
             </FadeIn>
           ))}
+        </div>
+
+        {/* Full capabilities — ancillary/enabling services under one roof */}
+        <div className="max-w-6xl mx-auto mt-20">
+          <SectionHeader
+            eyebrow="Full Capabilities"
+            title={<>Everything managed <span className="text-gradient">in-house</span></>}
+            intro="Beyond the core categories, these enabling services mean one team — and one point of contact — owns your entire event."
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {ANCILLARY_SERVICES.map((cat, i) => (
+              <FadeIn key={cat.category} delay={(i % 4) * 0.05}>
+                <div className="h-full bg-surface border border-border rounded-2xl p-5">
+                  <h3 className="font-display text-base font-bold text-fg mb-3">{cat.category}</h3>
+                  <ul className="flex flex-col gap-2">
+                    {cat.services.map((s) => (
+                      <li key={s} className="flex items-start gap-2 text-sm text-muted leading-snug">
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                        {s}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
         </div>
 
         <div className="max-w-6xl mx-auto mt-16 bg-hero-bg text-hero-fg rounded-3xl p-10 text-center">

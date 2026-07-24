@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { CASE_STUDIES } from "@/lib/case-studies";
 
 const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://eventuall.com";
 
@@ -11,6 +12,7 @@ const routes = [
   "/about",
   "/case-studies",
   "/blog",
+  ...CASE_STUDIES.map((c) => `/case-studies/${c.slug}`),
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
