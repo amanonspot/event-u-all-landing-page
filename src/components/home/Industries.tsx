@@ -4,7 +4,7 @@ import { INDUSTRIES } from "@/lib/site";
 
 export default function Industries() {
   return (
-    <section className="px-6 md:px-12 py-24 bg-surface">
+    <section id="industries" className="px-6 md:px-12 py-24 bg-surface scroll-mt-20">
       <div className="max-w-6xl mx-auto">
         <SectionHeader
           eyebrow="Industries Served"

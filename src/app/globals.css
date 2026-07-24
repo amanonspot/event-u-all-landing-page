@@ -48,9 +48,10 @@
   --font-body: var(--font-instrument);
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* Note: no global `scroll-behavior: smooth` — on this long page it made native
+   hash/anchor navigation (e.g. header "Industries" → #industries) unreliable, as
+   the browser's smooth animation targeted a stale position and got interrupted.
+   Instant anchor jumps land correctly under the sticky nav (see `scroll-mt-20`). */
 
 body {
   background: var(--bg);

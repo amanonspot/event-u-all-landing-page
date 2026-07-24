@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import HashScroll from "@/components/HashScroll";
 
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
@@ -72,6 +73,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
+        <HashScroll />
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />

@@ -31,10 +31,28 @@ export default function Nav() {
     ? "text-muted hover:text-fg"
     : "text-white/80 hover:text-white";
 
+  // Same-page anchor links (e.g. "/#industries" while already on "/") need a
+  // manual scroll — the App Router doesn't perform the native hash jump for a
+  // same-route <Link>. Cross-page hash links fall through to normal navigation
+  // and are handled by <HashScroll> on arrival.
+  const handleNav = (href: string) => (e: React.MouseEvent) => {
+    setOpen(false);
+    const hashIndex = href.indexOf("#");
+    if (hashIndex === -1) return;
+    const targetPath = href.slice(0, hashIndex) || "/";
+    if (pathname !== targetPath) return; // cross-page → let Link navigate
+    const el = document.getElementById(href.slice(hashIndex + 1));
+    if (el) {
+      e.preventDefault();
+      el.scrollIntoView();
+      history.replaceState(null, "", href);
+    }
+  };
+
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-[900] flex items-center gap-8 px-6 md:px-12 h-[68px] border-b transition-colors duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[900] flex items-center gap-4 xl:gap-8 px-6 md:px-12 h-[68px] border-b transition-colors duration-300 ${
           solid
             ? "bg-bg/95 backdrop-blur-xl border-border"
             : "bg-transparent border-transparent"
@@ -51,14 +69,15 @@ export default function Nav() {
           />
         </Link>
 
-        <ul className="hidden lg:flex gap-7 items-center ml-auto">
+        <ul className="hidden lg:flex gap-4 xl:gap-6 items-center ml-auto">
           {NAV_LINKS.map((l) => {
             const active = pathname === l.href;
             return (
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className={`text-sm font-medium transition-colors ${
+                  onClick={handleNav(l.href)}
+                  className={`text-sm font-medium whitespace-nowrap transition-colors ${
                     active && solid ? "text-fg" : linkColor
                   }`}
                 >
@@ -69,16 +88,16 @@ export default function Nav() {
           })}
         </ul>
 
-        <div className="hidden lg:flex items-center gap-3 ml-2">
+        <div className="hidden lg:flex items-center gap-3 ml-2 shrink-0">
           <a
             href={SITE.phoneHref}
-            className={`text-sm font-semibold transition-colors ${linkColor}`}
+            className={`text-sm font-semibold whitespace-nowrap transition-colors ${linkColor}`}
           >
             Call Now
           </a>
           <Link
             href="/contact"
-            className="inline-flex px-5 py-2 bg-accent text-white text-sm font-semibold rounded-lg hover:opacity-90 hover:shadow-[0_0_24px_var(--accent-soft)] transition"
+            className="inline-flex whitespace-nowrap px-5 py-2 bg-accent text-white text-sm font-semibold rounded-lg hover:opacity-90 hover:shadow-[0_0_24px_var(--accent-soft)] transition"
           >
             Get Proposal
           </Link>
@@ -114,7 +133,7 @@ export default function Nav() {
           <Link
             key={l.href}
             href={l.href}
-            onClick={() => setOpen(false)}
+            onClick={handleNav(l.href)}
             className="font-display text-2xl font-bold text-fg hover:text-accent transition-colors"
           >
             {l.label}
