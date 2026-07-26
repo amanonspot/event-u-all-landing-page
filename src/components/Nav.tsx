@@ -8,21 +8,11 @@ import { INDUSTRY_DETAILS } from "@/lib/industries";
 
 export default function Nav() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
-  // The homepage opens with a dark hero, so the nav starts light-on-transparent
-  // there and flips to a solid light bar on scroll. Other routes have light
-  // content at the top, so the nav is solid from the start.
-  const overHero = pathname === "/";
-  const solid = scrolled || !overHero || open;
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  // The homepage hero is now light (type-led), so the nav is a solid light bar
+  // with dark links + black logo on every route — no transparent-over-hero state.
+  const solid = true;
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";

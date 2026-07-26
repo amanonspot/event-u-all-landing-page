@@ -1,16 +1,15 @@
+"use client";
+
 import Link from "next/link";
-import FadeIn from "@/components/FadeIn";
+import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import { STATS } from "@/lib/site";
-import { ux, HERO_IMG } from "@/lib/images";
 import { HERO_VIDEO } from "@/lib/videos";
 
-export default function Hero() {
+function HeroMedia({ rounded = true }: { rounded?: boolean }) {
   return (
-    <section className="relative min-h-screen flex items-center px-6 md:px-12 pt-32 pb-24 overflow-hidden bg-hero-bg text-hero-fg">
-      {/* Cinematic backdrop: looping event film when a hosted URL is set,
-          otherwise the aerial poster / photo. The poster is always present as
-          the video's fallback + LCP image. Reduced motion → poster only. */}
+    <>
       {HERO_VIDEO.src ? (
         <video
           src={HERO_VIDEO.src}
@@ -20,90 +19,143 @@ export default function Hero() {
           loop
           playsInline
           aria-hidden
-          className="absolute inset-0 w-full h-full object-cover motion-reduce:hidden"
+          className="absolute inset-0 w-full h-full object-cover"
         />
-      ) : null}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={HERO_VIDEO.src ? HERO_VIDEO.poster : ux(HERO_IMG, 1920, 1080)}
-        alt=""
-        aria-hidden
-        className={`absolute inset-0 w-full h-full object-cover ${HERO_VIDEO.src ? "motion-reduce:block hidden" : ""}`}
-      />
-      {/* Dark gradient wash for legibility + brand tint */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(120% 90% at 75% 0%, rgba(200,150,58,0.20) 0%, transparent 55%), radial-gradient(90% 80% at 10% 100%, rgba(224,101,60,0.16) 0%, transparent 60%), linear-gradient(180deg,rgba(8,12,22,0.82) 0%,rgba(8,12,22,0.92) 100%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-[0.05] pointer-events-none"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
-        }}
-      />
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={HERO_VIDEO.poster} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover" />
+      )}
+      {/* subtle wash for the caption legibility */}
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+      <span
+        className="absolute left-4 bottom-6 text-[11px] font-semibold uppercase tracking-[0.25em] text-white/80 select-none"
+        style={{ writingMode: "vertical-rl" as const }}
+      >
+        Take a look around
+      </span>
+      {rounded && null}
+    </>
+  );
+}
 
-      <div className="relative z-10 max-w-6xl mx-auto w-full grid lg:grid-cols-[1.3fr_1fr] gap-12 items-center">
-        <div className="max-w-2xl">
-          <FadeIn>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 border border-hero-border rounded-full bg-white/[0.04] text-xs font-semibold text-hero-fg/90 mb-6 tracking-wide">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent euall-pulse" />
-              Concept to Execution · 20+ Years · PAN‑India
+function Headline() {
+  return (
+    <div className="max-w-3xl mx-auto text-center px-6">
+      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 border border-border rounded-full bg-surface text-xs font-semibold text-muted mb-6 tracking-wide">
+        <span className="w-1.5 h-1.5 rounded-full bg-accent euall-pulse" />
+        Concept to Execution · 20+ Years · PAN‑India
+      </div>
+      <h1 className="font-display text-[clamp(40px,7vw,86px)] font-extrabold leading-[1.02] tracking-tight text-fg">
+        Corporate Events <br className="hidden sm:block" />
+        Planned to <span className="text-gradient">Perfection.</span>
+      </h1>
+      <p className="text-lg text-muted leading-relaxed mt-6 mb-9 max-w-xl mx-auto">
+        From strategy and venues to artists, production and hospitality — high-impact
+        corporate events, delivered under one roof.
+      </p>
+      <div className="flex gap-4 flex-wrap justify-center">
+        <Link
+          href="/contact"
+          className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-white text-[15px] font-semibold rounded-lg hover:opacity-90 hover:shadow-[0_0_40px_rgba(200,150,58,0.4)] transition"
+        >
+          Get Proposal →
+        </Link>
+        <Link
+          href="/services"
+          className="inline-flex items-center gap-2 px-7 py-3.5 border border-border text-fg text-[15px] font-semibold rounded-lg hover:bg-surface transition"
+        >
+          Explore Services
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function StatsStrip() {
+  return (
+    <section className="px-6 md:px-12 py-12 bg-bg border-t border-border">
+      <div className="max-w-5xl mx-auto grid grid-cols-3 gap-4">
+        {STATS.map((s) => (
+          <div key={s.label} className="text-center">
+            <div className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-gradient">
+              <AnimatedCounter target={s.value} suffix={s.suffix} />
             </div>
-          </FadeIn>
-
-          <FadeIn delay={0.1}>
-            <h1 className="font-display text-[clamp(38px,6.2vw,74px)] font-extrabold leading-[1.02] tracking-tight mb-6">
-              Corporate Events <br className="hidden sm:block" />
-              Planned to <span className="text-gradient">Perfection.</span>
-            </h1>
-          </FadeIn>
-
-          <FadeIn delay={0.2}>
-            <p className="text-lg text-hero-muted leading-relaxed mb-9 max-w-xl">
-              From strategy and venues to artists, production and hospitality — we
-              deliver high-impact corporate events under one roof. Trusted by
-              India&apos;s leading brands.
-            </p>
-          </FadeIn>
-
-          <FadeIn delay={0.3}>
-            <div className="flex gap-4 flex-wrap">
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-white text-[15px] font-semibold rounded-lg hover:opacity-90 hover:shadow-[0_0_40px_rgba(200,150,58,0.4)] transition"
-              >
-                Get Proposal →
-              </Link>
-              <Link
-                href="/services"
-                className="inline-flex items-center gap-2 px-7 py-3.5 border border-hero-border text-hero-fg/90 text-[15px] font-semibold rounded-lg hover:text-white hover:border-white/40 hover:bg-white/[0.06] transition"
-              >
-                Explore Services
-              </Link>
-            </div>
-          </FadeIn>
-        </div>
-
-        <div className="grid grid-cols-3 lg:grid-cols-1 gap-2.5 sm:gap-4">
-          {STATS.map((s, i) => (
-            <FadeIn key={s.label} delay={0.2 + i * 0.1}>
-              <div className="h-full bg-white/[0.05] border border-hero-border rounded-2xl px-3 py-4 sm:px-6 sm:py-5 backdrop-blur-sm">
-                <div className="font-display text-xl sm:text-3xl md:text-4xl font-extrabold text-white">
-                  <AnimatedCounter target={s.value} suffix={s.suffix} />
-                </div>
-                <div className="text-[11px] sm:text-sm text-hero-muted mt-1 leading-tight">{s.label}</div>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
+            <div className="text-xs sm:text-sm text-muted mt-1">{s.label}</div>
+          </div>
+        ))}
       </div>
     </section>
+  );
+}
+
+export default function Hero() {
+  const reduce = useReducedMotion();
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  // Scrub only on desktop and when motion is allowed; otherwise a clean static stack.
+  const animated = isDesktop && !reduce;
+
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end end"],
+  });
+
+  const width = useTransform(scrollYProgress, [0, 1], ["58%", "100%"]);
+  const height = useTransform(scrollYProgress, [0, 1], ["46vh", "100vh"]);
+  const radius = useTransform(scrollYProgress, [0, 1], [24, 0]);
+  const mediaY = useTransform(scrollYProgress, [0, 1], [40, 0]);
+  const headlineOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+  const headlineY = useTransform(scrollYProgress, [0, 0.5], [0, -70]);
+
+  // ── Static fallback (mobile / reduced motion): headline → media → stats ──
+  if (!animated) {
+    return (
+      <>
+        <section className="bg-bg pt-32 pb-14">
+          <Headline />
+          <div className="mt-12 px-4 sm:px-6">
+            <div className="relative mx-auto max-w-6xl h-[52vh] min-h-[340px] rounded-2xl overflow-hidden">
+              <HeroMedia />
+            </div>
+          </div>
+        </section>
+        <StatsStrip />
+      </>
+    );
+  }
+
+  // ── Animated scroll-reveal (desktop) ──
+  return (
+    <>
+      <section ref={ref} className="relative h-[220vh] bg-bg">
+        <div className="sticky top-0 h-screen overflow-hidden flex items-start justify-center">
+          {/* Headline sits in the upper area and fades up as the media takes over */}
+          <motion.div
+            style={{ opacity: headlineOpacity, y: headlineY }}
+            className="absolute top-[16vh] inset-x-0 z-20"
+          >
+            <Headline />
+          </motion.div>
+
+          {/* Media rises from the bottom and expands to full-bleed */}
+          <motion.div
+            style={{ width, height, borderRadius: radius, y: mediaY }}
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 overflow-hidden shadow-[0_30px_80px_rgba(11,18,32,0.18)] z-10"
+          >
+            <HeroMedia />
+          </motion.div>
+        </div>
+      </section>
+      <StatsStrip />
+    </>
   );
 }
