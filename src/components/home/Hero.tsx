@@ -30,18 +30,21 @@ function HeroVideo() {
   );
 }
 
-function EyebrowTitle() {
+function Eyebrow() {
   return (
-    <>
-      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-current/20 bg-current/[0.06] text-xs font-semibold tracking-wide">
-        <span className="w-1.5 h-1.5 rounded-full bg-accent euall-pulse" />
-        Concept to Execution · 20+ Years · PAN‑India
-      </div>
-      <h1 className="mt-8 font-display text-[clamp(36px,5.4vw,70px)] font-extrabold leading-[1.06] tracking-tight">
-        Corporate Events <br className="hidden sm:block" />
-        Planned to <span className="text-gradient">Perfection.</span>
-      </h1>
-    </>
+    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-current/20 bg-current/[0.06] text-xs font-semibold tracking-wide">
+      <span className="w-1.5 h-1.5 rounded-full bg-accent euall-pulse" />
+      Concept to Execution · 20+ Years · PAN‑India
+    </div>
+  );
+}
+
+function Title() {
+  return (
+    <h1 className="mt-8 font-display text-[clamp(36px,5.4vw,70px)] font-extrabold leading-[1.06] tracking-tight">
+      Corporate Events <br className="hidden sm:block" />
+      Planned to <span className="text-gradient">Perfection.</span>
+    </h1>
   );
 }
 
@@ -118,8 +121,8 @@ function AnimatedHero({ vh }: { vh: number }) {
   const overlayOpacity = useTransform(scrollY, [end * 0.1, end * 0.45], [0, 1]);
   const headlineColor = useTransform(scrollY, [end * 0.34, end * 0.52], ["#0b1220", "#ffffff"]);
   const headlineY = useTransform(scrollY, [0, end], [0, -12]);
-  // Subtext: visible at top, gone through the scrub, back at the settled end.
-  const subtextOpacity = useTransform(scrollY, [0, end * 0.12, end * 0.82, end], [1, 0, 0, 1]);
+  // Eyebrow + subtext: visible at top, gone through the scrub, back at the settled end.
+  const fadeOpacity = useTransform(scrollY, [0, end * 0.12, end * 0.82, end], [1, 0, 0, 1]);
   // Stat cards: fade + rise in once the reveal is done.
   const statsOpacity = useTransform(scrollY, [end * 0.8, end], [0, 1]);
   const statsY = useTransform(scrollY, [end * 0.8, end], [16, 0]);
@@ -143,11 +146,12 @@ function AnimatedHero({ vh }: { vh: number }) {
           className="absolute inset-x-0 top-0 pt-[13vh] z-20 pointer-events-none"
         >
           <HeroColumn>
-            <div className="pointer-events-auto inline-block">
-              <EyebrowTitle />
-            </div>
+            <motion.div style={{ opacity: fadeOpacity }} className="inline-block">
+              <Eyebrow />
+            </motion.div>
+            <Title />
             <motion.p
-              style={{ opacity: subtextOpacity }}
+              style={{ opacity: fadeOpacity }}
               className="text-lg leading-relaxed mt-7 max-w-xl mx-auto opacity-90"
             >
               {SUBTEXT}
@@ -174,7 +178,8 @@ function StaticHero() {
       <Caption />
       <div className="relative z-10 w-full text-white">
         <HeroColumn>
-          <EyebrowTitle />
+          <Eyebrow />
+          <Title />
           <p className="text-lg leading-relaxed mt-7 max-w-xl mx-auto opacity-90">{SUBTEXT}</p>
           <CTAs />
           <div className="mt-12">
