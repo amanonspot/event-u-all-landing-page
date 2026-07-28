@@ -1,6 +1,7 @@
 import Hero from "@/components/home/Hero";
 import TrustedBy from "@/components/home/TrustedBy";
 import Categories from "@/components/home/Categories";
+import RealEstate from "@/components/home/RealEstate";
 import Destinations from "@/components/home/Destinations";
 import Activities from "@/components/home/Activities";
 import Artists from "@/components/home/Artists";
@@ -19,6 +20,7 @@ export default function Home() {
       <Hero />
       <TrustedBy />
       <Categories />
+      <RealEstate />
       <Destinations />
       <Activities />
       <Artists />

@@ -50,6 +50,25 @@ export const CATEGORIES = [
   { title: "Exhibitions & Expos", tag: "Exhibitions", accent: "#06b6d4", href: "/services#exhibitions", img: "photo-1511578314322-379afb476865" },
 ];
 
+// Real estate developer offerings.
+export const REAL_ESTATE = [
+  {
+    title: "Project Launches",
+    blurb: "Grand unveilings for new residential & commercial projects — stage, walkthroughs, and press.",
+    img: "photo-1512453979798-5ea266f8880c",
+  },
+  {
+    title: "Channel Partner Meets",
+    blurb: "Broker & channel-partner events that grow your sales network and move inventory.",
+    img: "photo-1540575467063-178a50c2df87",
+  },
+  {
+    title: "Real Estate Launch Events",
+    blurb: "Sales-gallery openings, VIP previews & site launches engineered to convert.",
+    img: "photo-1587825140708-dfaf72ae4b04",
+  },
+];
+
 export const DESTINATIONS = [
   { name: "Goa", blurb: "Beach offsites & sundowners", img: "photo-1512343879784-a960bf40e7f2" },
   { name: "Thailand", blurb: "International team retreats", img: "photo-1528181304800-259b08848526" },
