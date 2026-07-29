@@ -42,22 +42,26 @@ export default function Process() {
             {PROCESS.map((p, i) => {
               const left = i % 2 === 0;
               return (
-                <div key={p.step} className="relative md:grid md:grid-cols-2 md:gap-x-16 md:py-4">
-                  {/* Node */}
-                  <div className="absolute top-0 left-[23px] md:left-1/2 -translate-x-1/2 z-10">
+                <div key={p.step} className="relative md:grid md:grid-cols-2 md:gap-x-8 md:py-3 md:items-center">
+                  {/* Node — vertically centered with its card */}
+                  <div className="absolute top-1/2 -translate-y-1/2 left-[23px] md:left-1/2 -translate-x-1/2 z-10">
                     <div className="w-11 h-11 rounded-full bg-hero-bg border-2 border-accent text-accent font-display text-sm font-extrabold flex items-center justify-center shadow-[0_0_0_4px_rgba(8,12,22,1),0_0_18px_rgba(200,150,58,0.35)]">
                       {p.step}
                     </div>
                   </div>
 
-                  {/* Card */}
+                  {/* Card — pulled toward the centre line */}
                   <FadeIn
                     delay={0.05}
                     className={`pl-16 md:pl-0 ${
-                      left ? "md:col-start-1 md:pr-14 md:text-right" : "md:col-start-2 md:pl-14"
+                      left ? "md:col-start-1 md:pr-12 md:text-right" : "md:col-start-2 md:pl-12"
                     }`}
                   >
-                    <div className="bg-white/[0.03] border border-hero-border rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.05]">
+                    <div
+                      className={`bg-white/[0.03] border border-hero-border rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.05] md:max-w-[460px] ${
+                        left ? "md:ml-auto" : "md:mr-auto"
+                      }`}
+                    >
                       <h3 className="font-display text-lg font-bold text-white">{p.title}</h3>
                       <p className="text-sm text-hero-muted leading-relaxed mt-1.5">{p.blurb}</p>
                     </div>
@@ -66,16 +70,16 @@ export default function Process() {
               );
             })}
 
-            {/* Finish marker */}
-            <div className="relative md:py-4">
+            {/* Finish marker — label sits beside (mobile) / below (desktop) the node */}
+            <div className="relative pt-6 md:pt-8">
               <div className="absolute top-0 left-[23px] md:left-1/2 -translate-x-1/2 z-10">
                 <div className="w-11 h-11 rounded-full bg-accent text-white flex items-center justify-center shadow-[0_0_0_4px_rgba(8,12,22,1),0_0_22px_rgba(200,150,58,0.5)]">
                   ★
                 </div>
               </div>
-              <div className="pl-16 md:pl-0 md:text-center md:col-span-2">
-                <p className="font-display text-base font-bold text-white pt-1.5">Standing ovation.</p>
-              </div>
+              <p className="pl-16 md:pl-0 md:pt-16 md:text-center font-display text-base font-bold text-white">
+                Standing ovation.
+              </p>
             </div>
           </div>
         </div>
