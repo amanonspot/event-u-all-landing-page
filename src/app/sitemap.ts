@@ -2,6 +2,9 @@ import type { MetadataRoute } from "next";
 import { CASE_STUDIES } from "@/lib/case-studies";
 import { INDUSTRY_DETAILS } from "@/lib/industries";
 
+// Emit a static sitemap.xml for `output: export`.
+export const dynamic = "force-static";
+
 const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://eventuall.com";
 
 const routes = [

@@ -1,0 +1,6 @@
+# Netlify build config. The site is a fully static Next.js export
+# (next.config.ts → output: "export"), so Netlify just publishes the `out`
+# folder — no Next.js server runtime needed.
+[build]
+  command = "npm run build"
+  publish = "out"
